@@ -1,0 +1,23 @@
+# メンバー一覧
+# - 1 人 1 エントリ。id は英数字で一意にする。
+# - photo / email は本人の同意がある場合のみ記入する。
+# - group: faculty（教員）/ student（学生）/ alumni（卒業生）
+- id: pi
+  name: "（記入: PI 氏名）"
+  nameEn: ""
+  role: 教授
+  group: faculty
+  order: 1
+  interests: [ナノスケール材料科学, MEMS, 電子顕微鏡その場観察]
+- id: student-sample-1
+  name: "（記入: 氏名）"
+  role: D2
+  group: student
+  order: 10
+  interests: [マルチフィジックス数値解析]
+- id: student-sample-2
+  name: "（記入: 氏名）"
+  role: B4
+  group: student
+  order: 20
+  interests: []

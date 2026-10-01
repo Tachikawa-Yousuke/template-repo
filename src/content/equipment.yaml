@@ -1,0 +1,10 @@
+# 装置・設備（サンプル。実データに差し替える）
+# 写真は public/images/equipment/ に置き、image にファイル名を書く。
+- id: tem-sample
+  name: "（記入: 装置名、例: 透過型電子顕微鏡）"
+  maker: ""
+  model: ""
+  description: "（記入: 用途・仕様の概要）"
+- id: cleanroom-sample
+  name: "（記入: 装置名、例: MEMS 作製用クリーンルーム設備）"
+  description: "（記入: 用途・仕様の概要）"

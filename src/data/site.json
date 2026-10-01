@@ -1,0 +1,11 @@
+{
+  "labName": "材料創製力学研究室",
+  "labNameShort": "M2D-lab",
+  "labNameEn": "Materials Mechanics and Design Laboratory",
+  "university": "（記入: 大学名・学部・学科）",
+  "address": "（記入: 郵便番号・住所・建物名・部屋番号）",
+  "email": "（記入: 代表メールアドレス。公開の可否を PI に確認）",
+  "accessNote": "（記入: 最寄り駅・バス停からの道順）",
+  "mapEmbedUrl": "",
+  "description": "ナノスケール材料科学、MEMS 作製、電子顕微鏡その場観察、マルチフィジックス数値解析を軸に研究を行う研究室です。"
+}

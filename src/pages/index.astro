@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+import { getCollection } from 'astro:content';
+import { withBase } from '../lib/url';
+
+const news = (await getCollection('news'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 5);
+const research = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
+const fmt = (d: Date) => d.toISOString().slice(0, 10);
+---
+<Base title="トップ">
+  <section class="hero">
+    <h1>{site.labName}</h1>
+    <p>{site.description}</p>
+  </section>
+
+  <section>
+    <h2>お知らせ</h2>
+    <ul class="news-list">
+      {news.map((n) => (
+        <li><time datetime={fmt(n.data.date)}>{fmt(n.data.date)}</time><span>{n.data.title}</span></li>
+      ))}
+    </ul>
+  </section>
+
+  <section>
+    <h2>研究テーマ</h2>
+    <ul class="card-grid">
+      {research.map((r) => (
+        <li class="card">
+          <h3><a href={withBase(`/research/${r.id}`)}>{r.data.title}</a></h3>
+          <p>{r.data.summary}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>

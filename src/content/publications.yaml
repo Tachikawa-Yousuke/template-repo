@@ -1,0 +1,18 @@
+# 業績リスト（サンプル。実データに差し替える）
+# - type: journal / conference / award / other
+# - doi は "10.xxxx/..." の形式で記入するとリンクが自動生成される。
+- id: sample-journal-2026
+  type: journal
+  title: （サンプル）論文タイトル
+  authors: A. Author, B. Author, C. Author
+  venue: Journal Name
+  year: 2026
+  volume: "1"
+  pages: "1-10"
+  doi: ""
+- id: sample-conf-2025
+  type: conference
+  title: （サンプル）学会発表タイトル
+  authors: A. Author, B. Author
+  venue: 国際会議名, 開催地
+  year: 2025
