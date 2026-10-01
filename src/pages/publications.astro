@@ -5,21 +5,29 @@ import { getCollection } from 'astro:content';
 
 const all = await getCollection('publications');
 const sections = [
-  { type: 'journal', label: '学術論文' },
-  { type: 'conference', label: '学会発表' },
-  { type: 'award', label: '受賞' },
-  { type: 'other', label: 'その他' },
+  { type: 'journal', label: '査読付き学術論文', en: 'Journal Articles' },
+  { type: 'conference', label: '学会発表', en: 'Conference' },
+  { type: 'award', label: '受賞', en: 'Awards' },
+  { type: 'other', label: 'その他', en: 'Others' },
 ] as const;
 ---
 <Base title="業績">
-  <h1>業績</h1>
+  <section class="page-head">
+    <div class="container">
+      <p class="label">Publications</p>
+      <h1 class="display">業績</h1>
+      <p class="page-sub">査読付き学術論文などの一覧です。番号は通し番号です。</p>
+    </div>
+  </section>
   {sections.map((s) => {
     const items = all.filter((p) => p.data.type === s.type);
     if (items.length === 0) return null;
     return (
-      <section>
-        <h2>{s.label}</h2>
-        <PublicationList items={items} />
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title" style="margin-bottom:32px">{s.label}<small>{s.en}</small></h2>
+          <PublicationList items={items} />
+        </div>
       </section>
     );
   })}

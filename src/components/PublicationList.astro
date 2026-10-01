@@ -2,7 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 interface Props { items: CollectionEntry<'publications'>[] }
 const { items } = Astro.props;
-// 年ごとにグループ化し、新しい年から表示する
+// 年ごとにグループ化し、新しい年・大きい通し番号から表示する
 const byYear = new Map<number, typeof items>();
 for (const p of items) {
   const list = byYear.get(p.data.year) ?? [];
@@ -10,23 +10,29 @@ for (const p of items) {
   byYear.set(p.data.year, list);
 }
 const years = [...byYear.keys()].sort((a, b) => b - a);
+const sortNum = (a: typeof items[number], b: typeof items[number]) => (b.data.number ?? 0) - (a.data.number ?? 0);
 ---
 {years.map((y) => (
-  <section>
-    <h3>{y}</h3>
+  <div class="year-block">
+    <div class="year">{y}</div>
     <ol class="pub-list">
-      {byYear.get(y)!.map(({ data }) => (
+      {byYear.get(y)!.sort(sortNum).map(({ data }) => (
         <li>
-          <span class="pub-authors">{data.authors}</span>,
-          「{data.title}」,
-          <em>{data.venue}</em>
-          {data.volume && <span>, {data.volume}</span>}
-          {data.pages && <span>, {data.pages}</span>}
-          <span> ({data.year})</span>
-          {data.doi && <span>. <a href={`https://doi.org/${data.doi}`}>DOI: {data.doi}</a></span>}
-          {!data.doi && data.url && <span>. <a href={data.url}>リンク</a></span>}
+          <span class="pub-num">{data.number ?? ''}</span>
+          <div>
+            <span class="pub-title">{data.title}</span>
+            <span class="pub-authors">{data.authors}</span><br />
+            <span class="pub-venue">
+              <em>{data.venue}</em>
+              {data.volume && <span>, {data.volume}</span>}
+              {data.pages && <span>, {data.pages}</span>}
+              <span> ({data.year})</span>
+              {data.doi && <span> · <a href={`https://doi.org/${data.doi}`} target="_blank" rel="noopener">DOI</a></span>}
+              {!data.doi && data.url && <span> · <a href={data.url} target="_blank" rel="noopener">Link</a></span>}
+            </span>
+          </div>
         </li>
       ))}
     </ol>
-  </section>
+  </div>
 ))}

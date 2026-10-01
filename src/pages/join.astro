@@ -1,15 +1,59 @@
 ---
 import Base from '../layouts/Base.astro';
 import site from '../data/site.json';
+import { withBase } from '../lib/url';
 ---
 <Base title="進学・配属希望の方へ">
-  <h1>進学・配属希望の方へ</h1>
-  <h2>学部生（研究室配属）の方へ</h2>
-  <p>（記入: 配属の流れ、見学の受け入れ、求める学生像）</p>
-  <h2>大学院進学を希望する方へ</h2>
-  <p>（記入: 入試情報へのリンク、研究室見学、事前連絡の方法）</p>
-  <h2>よくある質問</h2>
-  <p>（記入）</p>
-  <h2>連絡先</h2>
-  <p>{site.email}</p>
+  <section class="page-head">
+    <div class="container">
+      <p class="label">Join Us</p>
+      <h1 class="display">進学・配属希望の方へ</h1>
+      <p class="page-sub">研究室見学・Web 面談は随時受け付けています。</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container">
+      <p class="mission" style="font-size:clamp(1.3rem,3vw,2.2rem)">材料が好き。ナノに興味がある。原子を見たい。<br />新しい技術に触れたい。とにかく突き詰めて考えるのが好き。</p>
+      <p class="mission-en">One is enough. Come and talk to us.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-3">
+        <div class="cell">
+          <div class="cell-num">For B4</div>
+          <h3>学部生（研究室配属）の方へ</h3>
+          <p>（記入: 配属の流れ、配属前の見学受け入れ、求める学生像。現行サイトに該当記述がないため PI が追記）</p>
+        </div>
+        <div class="cell">
+          <div class="cell-num">For Graduate</div>
+          <h3>大学院進学を希望する方へ</h3>
+          <p>（記入: 入試情報へのリンク、事前連絡の方法。他大学・高専からの進学希望者向けの情報）</p>
+        </div>
+        <div class="cell">
+          <div class="cell-num">Lab Tour</div>
+          <h3>研究室見学・Web 面談</h3>
+          <p>随時対応します。問い合わせフォームから希望日時をお知らせください。メールでも構いません。</p>
+        </div>
+      </div>
+
+      <div class="prose" style="margin-top:64px">
+        <h2>どんな研究室か</h2>
+        <p>力学を基盤とした実験研究が中心です。基礎物理を理解しながら新しい科学の発展を目指します。{site.foundedText}の小規模な研究室のため、一人ひとりが装置を使い、材料を一からつくり、電子顕微鏡で原子を観る経験ができます。</p>
+        <h2>学べること</h2>
+        <ul>
+          <li>薄膜成膜・粉末焼結による材料創製と、組織制御の考え方</li>
+          <li>走査型・透過型電子顕微鏡による観察、電場・温度下でのその場観察</li>
+          <li>材料力学・熱力学・材料強度学・結晶学を統合した「原子を操る」モノづくり</li>
+        </ul>
+      </div>
+
+      <p style="margin-top:48px;display:flex;gap:16px;flex-wrap:wrap">
+        <a class="btn" href={site.contactFormUrl} target="_blank" rel="noopener">問い合わせフォーム ↗</a>
+        <a class="btn btn-outline" href={withBase('/research')}>研究テーマを見る</a>
+      </p>
+    </div>
+  </section>
 </Base>

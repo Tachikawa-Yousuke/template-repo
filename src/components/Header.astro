@@ -12,25 +12,40 @@ const nav = [
   { href: '/join', label: '進学・配属希望の方へ' },
   { href: '/access', label: 'アクセス' },
 ];
-const current = Astro.url.pathname;
+const current = Astro.url.pathname.replace(/\/$/, '');
+const isCurrent = (href: string) => current === withBase(href) || current.startsWith(withBase(href) + '/');
 ---
-<header class="site-header">
+<header class="site-header" id="site-header">
   <div class="container header-inner">
-    <a class="brand" href={withBase('/')}>
-      <span class="brand-main">{site.labName}</span>
-      <span class="brand-sub">{site.labNameShort}</span>
+    <a class="brand" href={withBase('/')} aria-label="トップページへ">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text">
+        <span class="brand-main">{site.labNameShort}</span>
+        <span class="brand-sub">{site.labName}｜{site.labNameAlt}</span>
+      </span>
     </a>
-    <nav aria-label="メインナビゲーション">
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="メニュー"><span></span></button>
+    <nav class="nav" id="site-nav" aria-label="メインナビゲーション">
       <ul>
         {nav.map((item) => (
           <li>
-            <a
-              href={withBase(item.href)}
-              aria-current={current.startsWith(withBase(item.href)) ? 'page' : undefined}
-            >{item.label}</a>
+            <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
           </li>
         ))}
       </ul>
     </nav>
   </div>
 </header>
+
+<script>
+  // スマートフォン用メニューの開閉
+  const header = document.getElementById('site-header');
+  const toggle = document.getElementById('nav-toggle');
+  if (header && toggle) {
+    toggle.addEventListener('click', () => {
+      const open = header.classList.toggle('nav-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      document.body.style.overflow = open ? 'hidden' : '';
+    });
+  }
+</script>

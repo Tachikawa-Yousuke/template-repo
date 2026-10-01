@@ -3,17 +3,29 @@ import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import { withBase } from '../lib/url';
 const items = await getCollection('equipment');
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 <Base title="装置・設備">
-  <h1>装置・設備</h1>
-  <ul class="card-grid">
-    {items.map(({ data }) => (
-      <li class="card">
-        {data.image && <img src={withBase(`/images/equipment/${data.image}`)} alt={data.name} />}
-        <h3>{data.name}</h3>
-        {(data.maker || data.model) && <p class="muted">{[data.maker, data.model].filter(Boolean).join(' ')}</p>}
-        <p>{data.description}</p>
-      </li>
-    ))}
-  </ul>
+  <section class="page-head">
+    <div class="container">
+      <p class="label">Apparatus</p>
+      <h1 class="display">装置・設備</h1>
+      <p class="page-sub">成膜・焼結から電子顕微鏡その場観察まで、材料を「一からつくり、観る」ための設備群です。</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-3">
+        {items.map(({ data }, i) => (
+          <div class="cell">
+            <div class="cell-num">{pad(i + 1)}</div>
+            {data.image && <img src={withBase(`/images/equipment/${data.image}`)} alt={data.name} style="margin-bottom:16px" />}
+            <h3>{data.name}</h3>
+            {(data.maker || data.model) && <p style="font-size:0.8rem">{[data.maker, data.model].filter(Boolean).join(' ')}</p>}
+            <p>{data.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 </Base>

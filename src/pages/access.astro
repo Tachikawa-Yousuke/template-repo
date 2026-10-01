@@ -1,17 +1,42 @@
 ---
 import Base from '../layouts/Base.astro';
 import site from '../data/site.json';
+const mapQuery = encodeURIComponent('九州大学 伊都キャンパス ウエスト4号館');
+const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 ---
 <Base title="アクセス・連絡先">
-  <h1>アクセス・連絡先</h1>
-  <h2>所在地</h2>
-  <p>{site.university}</p>
-  <p>{site.address}</p>
-  <h2>交通案内</h2>
-  <p>{site.accessNote}</p>
-  {site.mapEmbedUrl && (
-    <iframe src={site.mapEmbedUrl} width="100%" height="360" style="border:0" loading="lazy" title="地図"></iframe>
-  )}
-  <h2>連絡先</h2>
-  <p>{site.email}</p>
+  <section class="page-head">
+    <div class="container">
+      <p class="label">Contact / Access</p>
+      <h1 class="display">アクセス・連絡先</h1>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container contact-grid">
+      <div>
+        <p class="label" style="margin-bottom:16px">Address</p>
+        <address class="address">
+          〒{site.postalCode} {site.address}<br />
+          {site.university}<br />
+          {site.labName}（{site.labNameAlt}）<br />
+          {site.rooms}<br />
+          <span class="en">
+            {site.labNameEn}<br />
+            {site.universityEn}<br />
+            {site.roomsEn}<br />
+            {site.addressEn}
+          </span>
+        </address>
+        <p style="margin-top:24px"><a class="btn btn-outline" href={mapUrl} target="_blank" rel="noopener">Google マップで開く ↗</a></p>
+      </div>
+      <div>
+        <p class="label" style="margin-bottom:16px">Contact</p>
+        <p>当研究室に興味がある方は問い合わせフォームからどうぞ。研究室見学や Web 相談も随時対応します。</p>
+        <p class="muted" style="font-size:0.9rem">If you are interested in our laboratory, please contact us via the form below. We also offer lab tours and web consultations at any time.</p>
+        <p style="margin-top:24px"><a class="btn" href={site.contactFormUrl} target="_blank" rel="noopener">問い合わせフォーム ↗</a></p>
+        {site.email && <p style="margin-top:16px">Email: {site.email}</p>}
+        {site.mapEmbedUrl && <iframe src={site.mapEmbedUrl} width="100%" height="320" style="border:0;margin-top:32px" loading="lazy" title="地図"></iframe>}
+      </div>
+    </div>
+  </section>
 </Base>

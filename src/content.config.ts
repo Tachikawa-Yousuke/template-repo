@@ -9,6 +9,8 @@ const research = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/research' }),
   schema: z.object({
     title: z.string(),
+    titleEn: z.string().optional(),
+    tag: z.string().optional(), // 例: 基礎〜応用研究
     summary: z.string(),
     order: z.number().default(99),
     image: z.string().optional(), // public/images/research/ 以下の相対パス
@@ -31,6 +33,8 @@ const members = defineCollection({
     name: z.string(),
     nameEn: z.string().optional(),
     role: z.string(), // 例: 教授 / 助教 / D2 / M1 / B4
+    roleEn: z.string().optional(),
+    bio: z.string().optional(), // 経歴（教員向け）
     group: z.enum(['faculty', 'student', 'alumni']).default('student'),
     order: z.number().default(99),
     email: z.string().optional(), // 本人同意のある場合のみ
@@ -43,6 +47,7 @@ const members = defineCollection({
 const publications = defineCollection({
   loader: file('./src/content/publications.yaml'),
   schema: z.object({
+    number: z.number().optional(), // 通し番号
     type: z.enum(['journal', 'conference', 'award', 'other']).default('journal'),
     title: z.string(),
     authors: z.string(),

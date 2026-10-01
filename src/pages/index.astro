@@ -8,32 +8,102 @@ const news = (await getCollection('news'))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 5);
 const research = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
-const fmt = (d: Date) => d.toISOString().slice(0, 10);
+const fmt = (d: Date) => d.toISOString().slice(0, 10).replace(/-/g, '.');
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
-<Base title="トップ">
+<Base title="Home">
+  <!-- ヒーロー -->
   <section class="hero">
-    <h1>{site.labName}</h1>
-    <p>{site.description}</p>
+    <div class="container">
+      <p class="hero-meta">{site.university}<br />{site.labName}｜{site.labNameAlt}</p>
+      <div class="hero-bar"></div>
+      <h1 class="display hero-title">Mechanics for <em>Material</em> Design</h1>
+      <p class="hero-sub">{site.taglineSub}</p>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">SCROLL</div>
   </section>
 
-  <section>
-    <h2>お知らせ</h2>
-    <ul class="news-list">
-      {news.map((n) => (
-        <li><time datetime={fmt(n.data.date)}>{fmt(n.data.date)}</time><span>{n.data.title}</span></li>
-      ))}
-    </ul>
+  <!-- ミッション帯 -->
+  <section class="band">
+    <div class="container">
+      <p class="mission">『{site.mission}』</p>
+      <p class="mission-en">{site.missionEn}</p>
+    </div>
   </section>
 
-  <section>
-    <h2>研究テーマ</h2>
-    <ul class="card-grid">
-      {research.map((r) => (
-        <li class="card">
-          <h3><a href={withBase(`/research/${r.id}`)}>{r.data.title}</a></h3>
-          <p>{r.data.summary}</p>
-        </li>
-      ))}
-    </ul>
+  <!-- 概要 -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num">01</div>
+        <h2 class="section-title">研究室について<small>About</small></h2>
+      </div>
+      <p class="section-lead">
+        当研究室は、工学イノベーションを切り拓くことをミッションに{site.foundedText}した研究室です。
+        原子・ナノ・マイクロといった目に見えない極小スケールにおいて、誰もが簡単に使えるモノづくり技術の創出を目指しています。
+      </p>
+      <p class="section-lead muted">
+        目に見えないほど小さな材料は、小さくするだけで常識から外れた新しい機能（高い強度・奇妙な伝導性・高い化学反応性・特殊な光応答性）を示します。
+        しかし「つくるのが難しい」ために普及していません。それを突破する鍵が、固相中の物質輸送現象である<strong style="color:var(--accent)">原子拡散</strong>です。
+      </p>
+      <p style="margin-top:32px"><a class="btn btn-outline" href={withBase('/about')}>研究室概要を読む →</a></p>
+    </div>
+  </section>
+
+  <!-- 研究テーマ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num">02</div>
+        <h2 class="section-title">研究テーマ<small>Research</small></h2>
+      </div>
+      <ul class="row-list">
+        {research.map((r, i) => (
+          <li>
+            <a href={withBase(`/research/${r.id}`)}>
+              <span class="row-num">{pad(i + 1)}</span>
+              <span>
+                <span class="row-title">{r.data.title}</span>
+                <span class="row-sub">{r.data.titleEn}</span>
+              </span>
+              <span class="row-tag">{r.data.tag}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- お知らせ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num">03</div>
+        <h2 class="section-title">お知らせ<small>News</small></h2>
+      </div>
+      <ul class="news-list">
+        {news.map((n) => (
+          <li><time datetime={n.data.date.toISOString().slice(0, 10)}>{fmt(n.data.date)}</time><span>{n.data.title}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 連絡 -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-num">04</div>
+        <h2 class="section-title">研究室見学・お問い合わせ<small>Contact</small></h2>
+      </div>
+      <p class="section-lead">
+        材料が好き、ナノ（小さいもの）に興味がある、原子を見たい、新しい技術や知識に触れてみたい、とにかく突き詰めて考えることが好き。
+        一つでも当てはまる方は、気軽にお問い合わせください。研究室見学や Web 面談は随時受け付けています。
+      </p>
+      <p style="margin-top:32px;display:flex;gap:16px;flex-wrap:wrap">
+        <a class="btn" href={site.contactFormUrl} target="_blank" rel="noopener">問い合わせフォーム ↗</a>
+        <a class="btn btn-outline" href={withBase('/join')}>進学・配属希望の方へ</a>
+      </p>
+    </div>
   </section>
 </Base>

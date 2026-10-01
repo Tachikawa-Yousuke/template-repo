@@ -3,15 +3,33 @@ import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import { withBase } from '../../lib/url';
 const research = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 <Base title="研究テーマ">
-  <h1>研究テーマ</h1>
-  <ul class="card-grid">
-    {research.map((r) => (
-      <li class="card">
-        <h3><a href={withBase(`/research/${r.id}`)}>{r.data.title}</a></h3>
-        <p>{r.data.summary}</p>
-      </li>
-    ))}
-  </ul>
+  <section class="page-head">
+    <div class="container">
+      <p class="label">Research</p>
+      <h1 class="display">研究テーマ</h1>
+      <p class="page-sub">現在進行中の研究テーマです。随時更新します。</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <ul class="row-list">
+        {research.map((r, i) => (
+          <li>
+            <a href={withBase(`/research/${r.id}`)}>
+              <span class="row-num">{pad(i + 1)}</span>
+              <span>
+                <span class="row-title">{r.data.title}</span>
+                <span class="row-sub">{r.data.titleEn}</span>
+                <span class="row-sub" style="color:#d6d6d6">{r.data.summary}</span>
+              </span>
+              <span class="row-tag">{r.data.tag}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
 </Base>

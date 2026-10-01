@@ -1,11 +1,34 @@
 ---
 import site from '../data/site.json';
+import { withBase } from '../lib/url';
 const year = new Date().getFullYear();
+const links = [
+  { href: '/about', label: '研究室概要' },
+  { href: '/research', label: '研究テーマ' },
+  { href: '/members', label: 'メンバー' },
+  { href: '/publications', label: '業績' },
+  { href: '/equipment', label: '装置・設備' },
+  { href: '/join', label: '進学・配属希望の方へ' },
+  { href: '/access', label: 'アクセス・連絡先' },
+];
 ---
 <footer class="site-footer">
   <div class="container">
-    <p>{site.labName}（{site.labNameShort}）</p>
-    <p>{site.university}</p>
-    <p class="copyright">&copy; {year} {site.labNameEn}</p>
+    <div class="footer-grid">
+      <div>
+        <p class="label">Mechanics for Material Design</p>
+        <div class="footer-name">{site.labName}｜{site.labNameAlt}</div>
+        <div class="footer-name-en">{site.labNameEn}<br />{site.universityEn}</div>
+        <p class="muted" style="margin-top:16px;font-size:0.9rem">{site.university}<br />〒{site.postalCode} {site.address}</p>
+      </div>
+      <ul class="footer-links">
+        {links.map((l) => <li><a href={withBase(l.href)}>{l.label}</a></li>)}
+        <li><a href={site.contactFormUrl} target="_blank" rel="noopener">問い合わせフォーム ↗</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; {year} {site.labNameEn}</span>
+      <span class="en">KIMURA Lab, Kyushu University</span>
+    </div>
   </div>
 </footer>
